@@ -1,0 +1,221 @@
+<table>
+  <tr>
+    <th>type</th>
+    <th>name</th>
+    <th>tbl_name</th>
+    <th>rootpage</th>
+    <th>sql</th>
+  </tr>
+  <tr></tr>
+  <tr>
+    <td>table</td>
+    <td>alembic_version</td>
+    <td>alembic_version</td>
+    <td>2</td>
+    <td>
+      CREATE TABLE alembic_version ( version_num VARCHAR(32) NOT NULL,
+      CONSTRAINT alembic_version_pkc PRIMARY KEY (version_num) )
+    </td>
+  </tr>
+  <tr>
+    <td>index</td>
+    <td>sqlite_autoindex_alembic_version_1</td>
+    <td>alembic_version</td>
+    <td>3</td>
+    <td>NULL</td>
+  </tr>
+  <tr>
+    <td>table</td>
+    <td>products</td>
+    <td>products</td>
+    <td>4</td>
+    <td>
+      CREATE TABLE products ( id VARCHAR(36) NOT NULL, name VARCHAR(200) NOT
+      NULL, description TEXT NOT NULL, price FLOAT NOT NULL, original_price
+      FLOAT, category VARCHAR(100) NOT NULL, subcategory VARCHAR(100) NOT NULL,
+      brand VARCHAR(100) NOT NULL, rating FLOAT, review_count INTEGER, image_url
+      VARCHAR(500), stock INTEGER, features TEXT, is_on_sale BOOLEAN,
+      sale_percentage INTEGER, created_at DATETIME, updated_at DATETIME,
+      is_active BOOLEAN, embedding_id VARCHAR(100), PRIMARY KEY (id) )
+    </td>
+  </tr>
+  <tr>
+    <td>index</td>
+    <td>sqlite_autoindex_products_1</td>
+    <td>products</td>
+    <td>5</td>
+    <td>NULL</td>
+  </tr>
+  <tr>
+    <td>index</td>
+    <td>ix_products_brand</td>
+    <td>products</td>
+    <td>6</td>
+    <td>CREATE INDEX ix_products_brand ON products (brand)</td>
+  </tr>
+  <tr>
+    <td>index</td>
+    <td>ix_products_category</td>
+    <td>products</td>
+    <td>7</td>
+    <td>CREATE INDEX ix_products_category ON products (category)</td>
+  </tr>
+  <tr>
+    <td>index</td>
+    <td>ix_products_is_active</td>
+    <td>products</td>
+    <td>8</td>
+    <td>CREATE INDEX ix_products_is_active ON products (is_active)</td>
+  </tr>
+  <tr>
+    <td>index</td>
+    <td>ix_products_is_on_sale</td>
+    <td>products</td>
+    <td>9</td>
+    <td>CREATE INDEX ix_products_is_on_sale ON products (is_on_sale)</td>
+  </tr>
+  <tr>
+    <td>index</td>
+    <td>ix_products_name</td>
+    <td>products</td>
+    <td>10</td>
+    <td>CREATE INDEX ix_products_name ON products (name)</td>
+  </tr>
+  <tr>
+    <td>index</td>
+    <td>ix_products_price</td>
+    <td>products</td>
+    <td>11</td>
+    <td>CREATE INDEX ix_products_price ON products (price)</td>
+  </tr>
+  <tr>
+    <td>index</td>
+    <td>ix_products_rating</td>
+    <td>products</td>
+    <td>12</td>
+    <td>CREATE INDEX ix_products_rating ON products (rating)</td>
+  </tr>
+  <tr>
+    <td>index</td>
+    <td>ix_products_stock</td>
+    <td>products</td>
+    <td>13</td>
+    <td>CREATE INDEX ix_products_stock ON products (stock)</td>
+  </tr>
+  <tr>
+    <td>index</td>
+    <td>ix_products_subcategory</td>
+    <td>products</td>
+    <td>14</td>
+    <td>CREATE INDEX ix_products_subcategory ON products (subcategory)</td>
+  </tr>
+  <tr>
+    <td>table</td>
+    <td>users</td>
+    <td>users</td>
+    <td>15</td>
+    <td>
+      CREATE TABLE users ( id VARCHAR(36) NOT NULL, email VARCHAR(120) NOT NULL,
+      name VARCHAR(100) NOT NULL, password_hash VARCHAR(255) NOT NULL,
+      preferences TEXT, created_at DATETIME, updated_at DATETIME, is_active
+      BOOLEAN, PRIMARY KEY (id) )
+    </td>
+  </tr>
+  <tr>
+    <td>index</td>
+    <td>sqlite_autoindex_users_1</td>
+    <td>users</td>
+    <td>16</td>
+    <td>NULL</td>
+  </tr>
+  <tr>
+    <td>index</td>
+    <td>ix_users_email</td>
+    <td>users</td>
+    <td>17</td>
+    <td>CREATE UNIQUE INDEX ix_users_email ON users (email)</td>
+  </tr>
+  <tr>
+    <td>table</td>
+    <td>cart</td>
+    <td>cart</td>
+    <td>18</td>
+    <td>
+      CREATE TABLE cart ( id VARCHAR(36) NOT NULL, user_id VARCHAR(36) NOT NULL,
+      product_id VARCHAR(36) NOT NULL, quantity INTEGER NOT NULL, created_at
+      DATETIME, updated_at DATETIME, PRIMARY KEY (id), FOREIGN KEY(product_id)
+      REFERENCES products (id), FOREIGN KEY(user_id) REFERENCES users (id) )
+    </td>
+  </tr>
+  <tr>
+    <td>index</td>
+    <td>sqlite_autoindex_cart_1</td>
+    <td>cart</td>
+    <td>19</td>
+    <td>NULL</td>
+  </tr>
+  <tr>
+    <td>table</td>
+    <td>chat_sessions</td>
+    <td>chat_sessions</td>
+    <td>20</td>
+    <td>
+      CREATE TABLE chat_sessions ( id VARCHAR(36) NOT NULL, user_id VARCHAR(36),
+      session_data TEXT, created_at DATETIME, updated_at DATETIME, is_active
+      BOOLEAN, PRIMARY KEY (id), FOREIGN KEY(user_id) REFERENCES users (id) )
+    </td>
+  </tr>
+  <tr>
+    <td>index</td>
+    <td>sqlite_autoindex_chat_sessions_1</td>
+    <td>chat_sessions</td>
+    <td>21</td>
+    <td>NULL</td>
+  </tr>
+  <tr>
+    <td>table</td>
+    <td>user_likes</td>
+    <td>user_likes</td>
+    <td>22</td>
+    <td>
+      CREATE TABLE user_likes ( id VARCHAR(36) NOT NULL, user_id VARCHAR(36) NOT
+      NULL, product_id VARCHAR(36) NOT NULL, created_at DATETIME, PRIMARY KEY
+      (id), FOREIGN KEY(product_id) REFERENCES products (id), FOREIGN
+      KEY(user_id) REFERENCES users (id), CONSTRAINT unique_user_product_like
+      UNIQUE (user_id, product_id) )
+    </td>
+  </tr>
+  <tr>
+    <td>index</td>
+    <td>sqlite_autoindex_user_likes_1</td>
+    <td>user_likes</td>
+    <td>23</td>
+    <td>NULL</td>
+  </tr>
+  <tr>
+    <td>index</td>
+    <td>sqlite_autoindex_user_likes_2</td>
+    <td>user_likes</td>
+    <td>24</td>
+    <td>NULL</td>
+  </tr>
+  <tr>
+    <td>table</td>
+    <td>messages</td>
+    <td>messages</td>
+    <td>25</td>
+    <td>
+      CREATE TABLE messages ( id VARCHAR(36) NOT NULL, chat_session_id
+      VARCHAR(36) NOT NULL, content TEXT NOT NULL, is_bot BOOLEAN, message_type
+      VARCHAR(50), products TEXT, extra_data TEXT, created_at DATETIME, PRIMARY
+      KEY (id), FOREIGN KEY(chat_session_id) REFERENCES chat_sessions (id) )
+    </td>
+  </tr>
+  <tr>
+    <td>index</td>
+    <td>sqlite_autoindex_messages_1</td>
+    <td>messages</td>
+    <td>26</td>
+    <td>NULL</td>
+  </tr>
+</table>
